@@ -7,11 +7,14 @@ import errorHandler from '../middlewares/errorHandler.js'
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  // adresse de ton frontend React
+  credentials: true,                // autorise l'envoi des cookies ou tokens
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/', routes);
+app.use('/api', routes);
 
 // gestion des erreurs
 app.use(errorHandler);
