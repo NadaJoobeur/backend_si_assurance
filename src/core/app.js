@@ -9,12 +9,8 @@ import {setupSwagger} from "./swagger.js";
 const app = express();
 
 app.use(cors({
-  origin: 'hhtp://localhost/1173',  // adresse de ton frontend React
-  credentials: true,                // autorise l'envoi des cookies ou tokens
-}));
-app.use(cors({
-  origin: 'http://localhost:5173',  // adresse de ton frontend React
-  credentials: true,                // autorise l'envoi des cookies ou tokens
+  origin: 'http://localhost:5173',
+  credentials: true,
 }));
 app.use(express.json());
 app.use(morgan('dev'));
