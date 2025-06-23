@@ -1,9 +1,10 @@
 import express from 'express';
+import userRoutes from '../modules/user/user.routes.js';
+import personneRoutes from '../modules/Personne/personne.routes.js'
+
 const router = express.Router();
-// Route d'accueil
-router.get('/', (req, res) => {
-  res.send('Hello');
-});
+router.use('/auth', userRoutes)
+router.use('/personnes', personneRoutes )
 
 
 export default router;
