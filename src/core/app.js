@@ -1,10 +1,9 @@
 import express from "express";
 import cors from "cors";
 import morgan from 'morgan';
-import setupSwagger from './swagger.js';
 import routes from './routes.js'
 import errorHandler from '../middlewares/errorHandler.js'
-import { swaggerUiMiddleware, swaggerUiHandler } from './swagger.js'
+import {setupSwagger} from "./swagger.js";
 
 
 const app = express();
@@ -21,8 +20,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api', routes);
-// Documentation Swagger à la racine /api-docs
-app.use('/api-docs', swaggerUiMiddleware, swaggerUiHandler)
 
 // gestion des erreurs
 app.use(errorHandler);

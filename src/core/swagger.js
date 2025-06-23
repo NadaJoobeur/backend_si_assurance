@@ -1,36 +1,28 @@
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
 
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Assurance',
+      title: 'API Documentation',
       version: '1.0.0',
-      description: 'Documentation de l\'API contrat assurance',
+      description: 'Documentation des APIs du projet',
     },
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
-      },
-    },
-    security: [
+    servers: [
       {
-        bearerAuth: [],
+        url: 'http://localhost:3000/api',
       },
     ],
   },
-  apis: ['./src/modules/contrat/*.js'],
-};
-
-const swaggerSpec = swaggerJsdoc(options);
-
-function setupSwagger(app) {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  apis: [
+    './src/modules/**/*.routes.js',
+    './src/modules/**/*.controller.js',
+  ],
 }
 
-export default setupSwagger;
+const swaggerSpec = swaggerJsdoc(options)
+
+export function setupSwagger(app) {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+}
