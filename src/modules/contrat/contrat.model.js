@@ -26,4 +26,6 @@ const Contrat = db.define('Contrat', {
   timestamps: false
 });
 
+
+
 export default Contrat;

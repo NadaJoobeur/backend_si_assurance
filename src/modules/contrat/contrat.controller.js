@@ -1,5 +1,5 @@
 // src/modules/contrat/contrat.controller.js
-import { getContratsClient, getProduitsClient,getGarantiesContrat, getVehiculesParContrat } from './contrat.service.js';
+import { getContratsClient, getProduitsClient,getGarantiesContrat, getVehiculesParContrat, updateContrat, updateGarantie,updateProfilVehicule, getDifferenceContrat, getPacksEtGaranties} from './contrat.service.js';
 
 export const fetchContratsClient = async (req, res, next) => {
   try {
@@ -87,3 +87,87 @@ export const fetchVehiculeParContrat = async (req, res,next) => {
     });
   }
 };
+
+export async function fetchUpdateContrat(req, res) {
+  const { numeroContrat } = req.params
+  const updates = req.body
+  console.log('Recherche contrat numeroContrat:', numeroContrat);
+
+  try {
+    const updatedContrat = await updateContrat(numeroContrat, updates)
+    if (!updatedContrat) {
+      return res.status(404).json({ message: 'Contrat non trouvé' })
+    }
+    return res.json(updatedContrat)
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: 'Erreur serveur' })
+  }
+}
+
+
+export async function fetchUpdateGarantie(req, res) {
+  const { numeroContrat } = req.params;
+  const updates = req.body;
+  console.log('Recherche Garantie numeroContrat:', numeroContrat);
+
+  try {
+    const updatedGarantie = await updateGarantie(numeroContrat, updates);
+    if (!updatedGarantie) {
+      return res.status(404).json({ message: 'Garantie non trouvée' });
+    }
+    return res.json(updatedGarantie);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erreur serveur' });
+  }
+}
+
+export async function fetchUpdateProfilVehicule(req, res) {
+  const { numeroContrat } = req.params;
+  const updates = req.body;
+
+  console.log('Recherche ProfilVehicule numeroContrat:', numeroContrat);
+
+  try {
+    const updatedProfil = await updateProfilVehicule(numeroContrat, updates);
+    if (!updatedProfil) {
+      return res.status(404).json({ message: 'Profil véhicule non trouvé' });
+    }
+    return res.json(updatedProfil);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erreur serveur' });
+  }
+}
+
+export async function fetchDifferenceContrat(req, res) {
+  const { numContrat } = req.params;
+
+  try {
+    const differences = await getDifferenceContrat(numContrat);
+    return res.json(differences);
+  } catch (error) {
+    console.error("Erreur lors du calcul des différences :", error);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
+}
+
+export async function getPacksProposesController(req, res) {
+  try {
+    const { numeroContrat } = req.params;
+
+    const result = await getPacksEtGaranties(numeroContrat);
+
+    if (result.packsProposes.length === 0 && result.garantiesOptionnellesProposees.length === 0) {
+      return res.status(204).json({ message: 'Aucune formule trouvée.' });
+    }
+
+    return res.status(200).json(result);
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Problème technique. Aucune formule trouvée.' });
+  }
+}
+

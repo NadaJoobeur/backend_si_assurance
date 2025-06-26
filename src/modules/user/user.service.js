@@ -17,7 +17,7 @@ export const loginUser = async ({ email, password }) => {
   const isValid = await bcrypt.compare(password, user.password)
   if (!isValid) throw new Error('Mot de passe incorrect')
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7jours' })
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
   return { user, token }
 }
