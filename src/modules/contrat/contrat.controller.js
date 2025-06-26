@@ -1,5 +1,20 @@
 // src/modules/contrat/contrat.controller.js
-import { getContratsClient, getProduitsClient,getGarantiesContrat, getVehiculesParContrat, updateContrat, updateGarantie,updateProfilVehicule, getDifferenceContrat, getPacksEtGaranties} from './contrat.service.js';
+import {
+  getContratsClient,
+  getProduitsClient,
+  getGarantiesContrat,
+  getVehiculesParContrat,
+  updateContrat,
+  updateGarantie,
+  updateProfilVehicule,
+  getDifferenceContrat,
+  getPacksEtGaranties,
+  createContratService,
+  getContratsByOwnerId,
+  deleteContratService,
+  getContratDetailService
+} from './contrat.service.js';
+
 
 export const fetchContratsClient = async (req, res, next) => {
   try {
@@ -171,3 +186,90 @@ export async function getPacksProposesController(req, res) {
   }
 }
 
+/* Pour le front */
+export const fetchAddContrat = async (req, res, next) => {
+ try {
+    const payload = req.body;
+    const contratCree = await createContratService(payload);
+    res.status(201).json({ message: 'Contrat créé avec succès', contrat: contratCree });
+  } catch (error) {
+    console.error('Erreur création contrat:', error);
+    res.status(500).json({ message: 'Erreur serveur lors de la création du contrat', error: error.message });
+  }
+};
+
+
+export const fetchListContrat = async (req, res) => {
+  const { ownerId } = req.params;
+
+  try {
+    const contrats = await getContratsByOwnerId(ownerId);
+    res.status(200).json(contrats);
+  } catch (error) {
+    console.error("Erreur fetchListContrat:", error);
+    res.status(500).json({ message: error.message || "Erreur serveur" });
+  }
+};
+
+export const fetchDeleteContrat = async (req, res) => {
+  const { numeroContrat } = req.params;
+
+  if (!numeroContrat) {
+    return res.status(400).json({ success: false, message: 'Le numéro de contrat est requis' });
+  }
+
+  try {
+    const result = await deleteContratService(numeroContrat);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Erreur suppression contrat:', error); // <-- log ici
+    res.status(500).json({ success: false, message: error.message || 'Erreur lors de la suppression du contrat' });
+  }
+};
+
+
+export const fetchDtailContrat = async (req, res) => {
+  const { numeroContrat } = req.params;
+
+  if (!numeroContrat) {
+    return res.status(400).json({
+      success: false,
+      message: 'Numéro de contrat requis'
+    });
+  }
+
+  try {
+    const result = await getContratDetailService(numeroContrat);
+    return res.status(200).json({
+      success: true,
+      data: result, // contient contrat, garanties et profilsVehicule
+    });
+  } catch (error) {
+    return res.status(404).json({
+      success: false,
+      message: error.message || 'Erreur lors de la récupération du contrat'
+    });
+  }
+};
+
+export const fetchUpdateContrat = async (req, res) => {
+  try {
+    const { numeroContrat } = req.params;
+    const payload = req.body;
+
+    if (!numeroContrat) {
+      return res.status(400).json({ success: false, message: 'Numéro contrat requis' });
+    }
+
+    const updatedContrat = await updateContrat(numeroContrat, payload);
+
+    if (!updatedContrat) {
+      return res.status(404).json({ success: false, message: 'Contrat non trouvé' });
+    }
+
+    res.json({ success: true, data: updatedContrat });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du contrat:', error);
+    res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+};
