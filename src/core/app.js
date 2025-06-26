@@ -5,7 +5,6 @@ import routes from './routes.js'
 import errorHandler from '../middlewares/errorHandler.js'
 import {setupSwagger} from "./swagger.js";
 
-
 const app = express();
 
 app.use(cors({

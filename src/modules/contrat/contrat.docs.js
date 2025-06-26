@@ -220,3 +220,229 @@
  *       500:
  *         description: Erreur serveur
  */
+
+
+/**
+ * @swagger
+ * /contrats/{numeroContrat}/update:
+ *   put:
+ *     tags:
+ *       - Contrats
+ *     summary: Mettre à jour un contrat et enregistrer les modifications dans l’historique
+ *     description: >
+ *       Cet endpoint permet de mettre à jour les champs d’un contrat spécifique, et de sauvegarder automatiquement l’historique des champs modifiés dans la table `HistoriqueContrat`.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: numeroContrat
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Le numéro unique du contrat à modifier
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             example:
+ *               branche: "Auto"
+ *               primeAnnuelle: "1200.00"
+ *               statutContrat: "Actif"
+ *     responses:
+ *       200:
+ *         description: Contrat mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Contrat'
+ *       404:
+ *         description: Contrat non trouvé
+ *       500:
+ *         description: Erreur interne serveur
+ */
+
+
+
+/**
+ * @swagger
+ * /contrats/{numeroContrat}/updateGarantie:
+ *   put:
+ *     summary: Mise à jour des garanties d’un contrat et historisation des changements
+ *     tags:
+ *       - Contrats
+ *     parameters:
+ *       - in: path
+ *         name: numeroContrat
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Numéro du contrat à mettre à jour
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               libelleGarantie:
+ *                 type: string
+ *                 example: "Vol"
+ *               capitalAssure:
+ *                 type: string
+ *                 example: "15000"
+ *               franchise:
+ *                 type: string
+ *                 example: "500"
+ *               rangAffichage:
+ *                 type: integer
+ *                 example: 1
+ *               codeGarantie:
+ *                 type: string
+ *                 example: "G123"
+ *     responses:
+ *       200:
+ *         description: Garantie mise à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 message: Garantie mise à jour
+ *       404:
+ *         description: Garantie non trouvée
+ *       500:
+ *         description: Erreur serveur
+ */
+
+
+/**
+ * @swagger
+ * /contrats/{numeroContrat}/updateProfilVehicule:
+ *   put:
+ *     summary: Met à jour un profil véhicule et enregistre l’historique des changements
+ *     tags:
+ *       - Contrats
+ *     parameters:
+ *       - in: path
+ *         name: numeroContrat
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Numéro du contrat du véhicule
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             example:
+ *               marque: "Peugeot"
+ *               puissanceFiscale: "8"
+ *               usage: "Affaires"
+ *     responses:
+ *       200:
+ *         description: Profil véhicule mis à jour avec succès
+ *       404:
+ *         description: Profil véhicule non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+
+/**
+ * @swagger
+ * /contrats/{numContrat}/difference:
+ *   get:
+ *     summary: Récupérer les différences d’un contrat (avenants)
+ *     tags:
+ *       - Contrats
+ *     parameters:
+ *       - in: path
+ *         name: numContrat
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Numéro du contrat à consulter
+ *     responses:
+ *       200:
+ *         description: Liste des modifications du contrat
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 champsModifies:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nomChamp:
+ *                         type: string
+ *                       ancienneValeur:
+ *                         type: string
+ *                       nouvelleValeur:
+ *                         type: string
+ *                 objetsModifies:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nomObjet:
+ *                         type: string
+ *                       typeModification:
+ *                         type: string
+ *                       champsModifies:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             nomChamp:
+ *                               type: string
+ *                             ancienneValeur:
+ *                               type: string
+ *                             nouvelleValeur:
+ *                               type: string
+ *                 montantPrime:
+ *                   type: number
+ *       500:
+ *         description: Erreur serveur
+ */
+
+
+
+/**
+ * @swagger
+ * /contrats/{numeroContrat}/autresGaranties:
+ *   get:
+ *     summary: Obtenir les packs non choisis + garanties optionnelles non souscrites
+ *     tags:
+ *       - Contrats
+ *     parameters:
+ *       - in: path
+ *         name: numeroContrat
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Numéro du contrat client
+ *     responses:
+ *       200:
+ *         description: Liste des packs proposés et garanties optionnelles disponibles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 packsProposes:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Pack'
+ *                 garantiesOptionnellesProposees:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Garantie'
+ *       204:
+ *         description: Aucune formule trouvée pour ce contrat
+ *       500:
+ *         description: Erreur interne serveur
+ */
