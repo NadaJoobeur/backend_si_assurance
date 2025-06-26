@@ -15,7 +15,7 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/api', routes);
+app.use('/', routes);
 
 // gestion des erreurs
 app.use(errorHandler);
