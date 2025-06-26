@@ -3,8 +3,7 @@
  * tags:
  *   - name: Contrats
  *     description: Gestion des contrats, véhicules et garanties d'un client
- * security:
- *   - bearerAuth: []
+ * 
  */
 
 
@@ -14,8 +13,7 @@
  *   get:
  *     tags:
  *       - Contrats
- *     security:
- *        - bearerAuth: []
+ *     
  *     summary: Liste des contrats d'un client
  *     parameters:
  *       - in: path
@@ -95,8 +93,7 @@
  *   get:
  *     tags:
  *       - Contrats
- *     security:
- *       - bearerAuth: []
+ *     
  *     summary: Liste des produits d’un client
  *     parameters:
  *       - in: path
@@ -137,8 +134,7 @@
  *   get:
  *     tags:
  *       - Contrats
- *     security:
- *       - bearerAuth: []
+ *     
  *     summary: Liste des garanties d’un contrat
  *     parameters:
  *       - in: path
@@ -185,8 +181,7 @@
  *   get:
  *     tags:
  *       - Contrats
- *     security:
- *        - bearerAuth: []
+ *    
  *     summary: Récupérer les véhicules liés à un contrat assuré
  *     description: >
  *       Cet endpoint permet de récupérer la liste des véhicules associés à un assuré donné, à partir de son numéro de contrat.  
