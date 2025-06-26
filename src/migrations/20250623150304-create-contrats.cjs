@@ -9,10 +9,12 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
-      numeroContrat: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
+    numeroContrat: {
+  type: Sequelize.STRING,
+  allowNull: false,
+  unique: true,
+},
+
       branche: {
         type: Sequelize.STRING,
         allowNull: true,
