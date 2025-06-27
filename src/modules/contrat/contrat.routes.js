@@ -13,7 +13,8 @@ import {
   fetchAddContrat,
   fetchListContrat,
   fetchDeleteContrat,
-  fetchDtailContrat
+  fetchDtailContrat,
+  fetchUpdateContrat1
 } from './contrat.controller.js';import { authMiddleware } from '../../middlewares/authMiddleware.js';
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post('/addContrat',authMiddleware, fetchAddContrat);
 router.get('/listContrat/:ownerId',authMiddleware, fetchListContrat);
 router.delete('/DeleteContrat/:numeroContrat',authMiddleware,fetchDeleteContrat),
 router.get('/:numeroContrat/details',authMiddleware,fetchDtailContrat),
-router.patch('/UpdateContrat/:numeroContrat',authMiddleware,fetchUpdateContrat),
+router.patch('/UpdateContrat/:numeroContrat',authMiddleware,fetchUpdateContrat1),
 
 /*specifiaction*/
 router.get('/:numeroIdentification/contrats-client',authMiddleware, fetchContratsClient);

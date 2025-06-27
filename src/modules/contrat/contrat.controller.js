@@ -5,6 +5,7 @@ import {
   getGarantiesContrat,
   getVehiculesParContrat,
   updateContrat,
+  updateContrat1,
   updateGarantie,
   updateProfilVehicule,
   getDifferenceContrat,
@@ -174,8 +175,9 @@ export async function getPacksProposesController(req, res) {
 
     const result = await getPacksEtGaranties(numeroContrat);
 
-    if (result.packsProposes.length === 0 && result.garantiesOptionnellesProposees.length === 0) {
-      return res.status(204).json({ message: 'Aucune formule trouvée.' });
+    if (!result || (result.packsProposes.length === 0 && result.garantiesOptionnellesProposees.length === 0)) {
+      // Pas de contenu : on peut renvoyer 204 sans corps
+      return res.status(204).send();
     }
 
     return res.status(200).json(result);
@@ -185,6 +187,7 @@ export async function getPacksProposesController(req, res) {
     return res.status(500).json({ message: 'Problème technique. Aucune formule trouvée.' });
   }
 }
+
 
 /* Pour le front */
 export const fetchAddContrat = async (req, res, next) => {
@@ -252,7 +255,7 @@ export const fetchDtailContrat = async (req, res) => {
   }
 };
 
-export const fetchUpdateContrat = async (req, res) => {
+export const fetchUpdateContrat1 = async (req, res) => {
   try {
     const { numeroContrat } = req.params;
     const payload = req.body;
@@ -261,7 +264,7 @@ export const fetchUpdateContrat = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Numéro contrat requis' });
     }
 
-    const updatedContrat = await updateContrat(numeroContrat, payload);
+    const updatedContrat = await updateContrat1(numeroContrat, payload);
 
     if (!updatedContrat) {
       return res.status(404).json({ success: false, message: 'Contrat non trouvé' });

@@ -435,12 +435,10 @@
  *               properties:
  *                 packsProposes:
  *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Pack'
+ *            
  *                 garantiesOptionnellesProposees:
  *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Garantie'
+ *                   
  *       204:
  *         description: Aucune formule trouvée pour ce contrat
  *       500:
