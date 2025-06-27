@@ -251,29 +251,39 @@ export async function getDifferenceContrat(numContrat) {
 
 
 export async function getPacksEtGaranties(numeroContrat) {
-  const packsJson = JSON.parse(fs.readFileSync(path.resolve('./src/data/packs.json')));
+  // Charger et parser le JSON complet (objet avec packs et garantiesOptionnelles)
+  const data = fs.readFileSync(path.resolve('./src/data/packs.json'), 'utf-8');
+  const packsJson = JSON.parse(data);
 
+  const packs = packsJson.packs; // tableau des packs principaux
+  const garantiesOptionnelles = packsJson.garantiesOptionnelles; // tableau garanties optionnelles
+
+  // Chercher le pack choisi par le client dans la BDD
   const packClient = await Pack.findOne({ where: { numeroContrat } });
   const codePackChoisi = packClient?.codePack;
 
-  if (!codePackChoisi) return { packsProposes: [], garantiesOptionnellesProposees: [] };
+  if (!codePackChoisi) {
+    // Pas de pack choisi => proposer tous les packs + toutes les garanties optionnelles
+    return {
+      packsProposes: packs,
+      garantiesOptionnellesProposees: garantiesOptionnelles
+    };
+  }
 
-  const packsProposes = packsJson.filter(pack => pack.codePack !== codePackChoisi);
+  // Packs proposés = tous les packs sauf celui choisi
+  const packsProposes = packs.filter(pack => pack.codePack !== codePackChoisi);
 
+  // Garanties déjà souscrites par le client
   const garantiesClient = await GarantieContrat.findAll({
     where: { numeroContrat },
     attributes: ['libelleGarantie']
   });
-
   const garantiesSouscrites = garantiesClient.map(g => g.libelleGarantie);
 
-  const packOptionnel = packsJson.find(p => p.codePack === 'OPTIONS');
-
-  const garantiesOptionnellesProposees = packOptionnel
-    ? packOptionnel.garanties.filter(g =>
-        !garantiesSouscrites.includes(g.nomTypeGarantie)
-      )
-    : [];
+  // Garanties optionnelles proposées = garanties optionnelles non déjà souscrites
+  const garantiesOptionnellesProposees = garantiesOptionnelles.filter(g =>
+    !garantiesSouscrites.includes(g.libelle)
+  );
 
   return {
     packsProposes,
@@ -399,7 +409,7 @@ export const getContratDetailService = async (numeroContrat) => {
 }
 
 
-export const updateContrat = async (numeroContrat, payload) => {
+export const updateContrat1 = async (numeroContrat, payload) => {
   const { contrat, garanties, profilVehicule } = payload;
 
   // Trouver le contrat existant

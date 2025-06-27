@@ -5,9 +5,10 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Documentation',
+      title: 'API Comar Tunisie - Assurance Auto',
       version: '1.0.0',
-      description: 'Documentation des APIs du projet',
+      description: `Cette API REST permet de gérer les services d'assurance auto pour la compagnie Comar Tunisie.
+Elle couvre la gestion des contrats d'assurance, des clients, des garanties, des packs et du calcul de devis personnalisés.`,
     },
     servers: [
       {
