@@ -294,8 +294,9 @@ export async function getPacksEtGaranties(numeroContrat) {
 /* fontend */
 
 
+
 export const createContratService = async (payload) => {
-  const { contrat, garanties, profilVehicule } = payload;
+  const { contrat, garanties, profilVehicule, pack } = payload;
 
   // Vérifier si la personne existe
   const personneExiste = await Personne.findOne({
@@ -326,8 +327,17 @@ export const createContratService = async (payload) => {
     });
   }
 
+  // 4. Création du pack lié au contrat
+  if (pack && pack.codePack && contrat.numeroContrat) {
+    await Pack.create({
+      numeroContrat: contrat.numeroContrat,
+      codePack: pack.codePack,
+    });
+  }
+
   return nouveauContrat;
 };
+
 
 
 export const getContratsByOwnerId = async (ownerId) => {
