@@ -12,7 +12,7 @@ module.exports = {
       numeroContrat: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        //unique: true,
       },
       libelleGarantie: {
         type: Sequelize.STRING,
