@@ -50,6 +50,7 @@ export const DetailPerson = async (numeroIdentification) => {
       listeAdresse: personne.listeAdresse || [],
       listeTelephone: personne.listeTelephone || [],
       listeMails: personne.listeMails || [],
+      blackList:personne.blackList ,
     };
   } catch (error) {
     throw error;
