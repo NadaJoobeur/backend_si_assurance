@@ -20,7 +20,9 @@ const ProfilVehicule = db.define('ProfilVehicule', {
   marque: { type: DataTypes.STRING, allowNull: true },
   constructeur: { type: DataTypes.STRING, allowNull: true },
   puissanceFiscale: { type: DataTypes.STRING, allowNull: true },
-  valeurCatalogue: { type: DataTypes.STRING, allowNull: true }
+  valeurCatalogue: { type: DataTypes.STRING, allowNull: true },
+  ageVehicule: { type: DataTypes.STRING, allowNull: true },
+  nombreChevaux: { type: DataTypes.STRING, allowNull: true }
 }, {
   tableName: 'profils_vehicule',
   timestamps: false,

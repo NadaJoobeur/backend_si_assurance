@@ -5,45 +5,25 @@
       "nomPack": "Pack RC",
       "descriptionPack": "Le pack minimum légal couvrant la responsabilité civile du conducteur.",
       "codeOffre": "AUTO_RC",
+      "taux": 0.02,
       "garanties": [
         {
           "codeTypeGarantie": "RC",
           "nomTypeGarantie": "Responsabilité Civile",
           "capitalGarantie": 100000,
-          "capitalMaximum": 100000,
-          "capitalMinimum": 100000,
-          "typeGarantie": 1,
-          "ordre": 1,
-          "franchises": [
-            {
-              "valeur": 0,
-              "codeType": "FR_RC",
-              "nomType": "Franchise RC"
-            }
-          ],
-          "limites": []
+          "taux": 0.02
         },
         {
           "codeTypeGarantie": "DEFREC",
           "nomTypeGarantie": "Défense et recours",
           "capitalGarantie": 5000,
-          "capitalMaximum": 5000,
-          "capitalMinimum": 5000,
-          "typeGarantie": 1,
-          "ordre": 2,
-          "franchises": [],
-          "limites": []
+          "taux": 0.005
         },
         {
           "codeTypeGarantie": "JURIDBASE",
           "nomTypeGarantie": "Protection juridique de base",
           "capitalGarantie": 3000,
-          "capitalMaximum": 3000,
-          "capitalMinimum": 3000,
-          "typeGarantie": 1,
-          "ordre": 3,
-          "franchises": [],
-          "limites": []
+          "taux": 0.004
         }
       ]
     },
@@ -52,85 +32,37 @@
       "nomPack": "Pack Sécurité",
       "descriptionPack": "Un niveau intermédiaire ajoutant des garanties importantes au pack RC.",
       "codeOffre": "AUTO_SEC",
+      "taux": 0.03,
       "garanties": [
         {
           "codeTypeGarantie": "INCENDIE",
           "nomTypeGarantie": "Incendie",
           "capitalGarantie": 10000,
-          "capitalMaximum": 15000,
-          "capitalMinimum": 5000,
-          "typeGarantie": 1,
-          "ordre": 1,
-          "franchises": [
-            {
-              "valeur": 500,
-              "codeType": "FR_INC",
-              "nomType": "Franchise Incendie"
-            }
-          ],
-          "limites": []
+          "taux": 0.007
         },
         {
           "codeTypeGarantie": "VOL",
           "nomTypeGarantie": "Vol",
           "capitalGarantie": 15000,
-          "capitalMaximum": 20000,
-          "capitalMinimum": 10000,
-          "typeGarantie": 1,
-          "ordre": 2,
-          "franchises": [
-            {
-              "valeur": 600,
-              "codeType": "FR_VOL",
-              "nomType": "Franchise Vol"
-            }
-          ],
-          "limites": []
+          "taux": 0.008
         },
         {
           "codeTypeGarantie": "BRISGLACE",
           "nomTypeGarantie": "Bris de glace",
           "capitalGarantie": 2000,
-          "capitalMaximum": 3000,
-          "capitalMinimum": 1000,
-          "typeGarantie": 1,
-          "ordre": 3,
-          "franchises": [
-            {
-              "valeur": 100,
-              "codeType": "FR_BG",
-              "nomType": "Franchise Bris de glace"
-            }
-          ],
-          "limites": []
+          "taux": 0.003
         },
         {
           "codeTypeGarantie": "CLIMAT",
           "nomTypeGarantie": "Événements climatiques",
           "capitalGarantie": 10000,
-          "capitalMaximum": 15000,
-          "capitalMinimum": 5000,
-          "typeGarantie": 1,
-          "ordre": 4,
-          "franchises": [
-            {
-              "valeur": 800,
-              "codeType": "FR_CLIM",
-              "nomType": "Franchise Climat"
-            }
-          ],
-          "limites": []
+          "taux": 0.006
         },
         {
           "codeTypeGarantie": "ASSISTSTD",
           "nomTypeGarantie": "Assistance standard",
           "capitalGarantie": 5000,
-          "capitalMaximum": 5000,
-          "capitalMinimum": 5000,
-          "typeGarantie": 1,
-          "ordre": 5,
-          "franchises": [],
-          "limites": []
+          "taux": 0.002
         }
       ]
     },
@@ -139,74 +71,31 @@
       "nomPack": "Pack Sérénité",
       "descriptionPack": "Le pack tous risques offrant la protection la plus complète.",
       "codeOffre": "AUTO_SER",
+      "taux": 0.04,
       "garanties": [
         {
           "codeTypeGarantie": "ACCIDENTS",
           "nomTypeGarantie": "Dommages tous accidents",
           "capitalGarantie": 30000,
-          "capitalMaximum": 40000,
-          "capitalMinimum": 20000,
-          "typeGarantie": 1,
-          "ordre": 1,
-          "franchises": [
-            {
-              "valeur": 1500,
-              "codeType": "FR_ACC",
-              "nomType": "Franchise Accident"
-            }
-          ],
-          "limites": []
+          "taux": 0.01
         },
         {
           "codeTypeGarantie": "VANDAL",
           "nomTypeGarantie": "Vandalisme",
           "capitalGarantie": 5000,
-          "capitalMaximum": 6000,
-          "capitalMinimum": 3000,
-          "typeGarantie": 1,
-          "ordre": 2,
-          "franchises": [
-            {
-              "valeur": 400,
-              "codeType": "FR_VAND",
-              "nomType": "Franchise Vandalisme"
-            }
-          ],
-          "limites": []
+          "taux": 0.005
         },
         {
           "codeTypeGarantie": "COLLISION",
           "nomTypeGarantie": "Collision étendue",
           "capitalGarantie": 25000,
-          "capitalMaximum": 30000,
-          "capitalMinimum": 20000,
-          "typeGarantie": 1,
-          "ordre": 3,
-          "franchises": [
-            {
-              "valeur": 1000,
-              "codeType": "FR_COLL",
-              "nomType": "Franchise Collision"
-            }
-          ],
-          "limites": []
+          "taux": 0.009
         },
         {
           "codeTypeGarantie": "COND_BASE",
           "nomTypeGarantie": "Conducteur de base",
           "capitalGarantie": 10000,
-          "capitalMaximum": 10000,
-          "capitalMinimum": 10000,
-          "typeGarantie": 1,
-          "ordre": 4,
-          "franchises": [
-            {
-              "valeur": 200,
-              "codeType": "FR_COND",
-              "nomType": "Franchise Conducteur"
-            }
-          ],
-          "limites": []
+          "taux": 0.004
         }
       ]
     }
@@ -214,83 +103,63 @@
   "garantiesOptionnelles": [
     {
       "libelle": "Véhicule de remplacement",
-      "capital": "1 500 TND",
-      "franchise": "150 TND",
       "code": "VREMP",
       "capitalMaximum": 1500,
-      "capitalMinimum": 1500
+      "taux": 0.002
     },
     {
       "libelle": "Garantie conducteur étendue",
-      "capital": "25 000 TND",
-      "franchise": "300 TND",
       "code": "CONDPLUS",
       "capitalMaximum": 25000,
-      "capitalMinimum": 25000
+      "taux": 0.004
     },
     {
       "libelle": "Assistance 0 km étendue",
-      "capital": "8 000 TND",
-      "franchise": "0 TND",
       "code": "ASSISTPLUS",
       "capitalMaximum": 8000,
-      "capitalMinimum": 8000
+      "taux": 0.002
     },
     {
       "libelle": "Vol partiel",
-      "capital": "5 000 TND",
-      "franchise": "300 TND",
       "code": "VOLPART",
       "capitalMaximum": 5000,
-      "capitalMinimum": 5000
+      "taux": 0.003
     },
     {
       "libelle": "Dommages électriques",
-      "capital": "4 000 TND",
-      "franchise": "250 TND",
       "code": "ELECTRIQUE",
       "capitalMaximum": 4000,
-      "capitalMinimum": 4000
+      "taux": 0.0025
     },
     {
       "libelle": "Accessoires non d’origine",
-      "capital": "2 500 TND",
-      "franchise": "200 TND",
       "code": "ACCNDOR",
       "capitalMaximum": 2500,
-      "capitalMinimum": 2500
+      "taux": 0.002
     },
     {
       "libelle": "Bris de glace étendu",
-      "capital": "3 000 TND",
-      "franchise": "150 TND",
       "code": "BRGL_EXT",
       "capitalMaximum": 3000,
-      "capitalMinimum": 3000
+      "taux": 0.003
     },
     {
       "libelle": "Catastrophes naturelles +",
-      "capital": "20 000 TND",
-      "franchise": "1 000 TND",
       "code": "CATPLUS",
       "capitalMaximum": 20000,
-      "capitalMinimum": 20000
+      "taux": 0.005
     },
     {
       "libelle": "Protection juridique renforcée",
-      "capital": "10 000 TND",
-      "franchise": "0 TND",
       "code": "JURIDPLUS",
       "capitalMaximum": 10000,
-      "capitalMinimum": 10000
+      "taux": 0.002
     },
     {
       "libelle": "Contenu du véhicule",
-      "capital": "2 000 TND",
-      "franchise": "250 TND",
       "code": "CONTENU",
       "capitalMaximum": 2000,
-      "capitalMinimum": 2000
+      "taux": 0.0015
     }
   ]
 }

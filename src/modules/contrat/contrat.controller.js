@@ -13,7 +13,7 @@ import {
   createContratService,
   getContratsByOwnerId,
   deleteContratService,
-  getContratDetailService
+  getContratDetailService  
 } from './contrat.service.js';
 
 

@@ -30,7 +30,10 @@ Elle couvre la gestion des contrats d'assurance, des clients, des garanties, des
       },
     ],
   },
-  apis: ['./src/modules/contrat/contrat.docs.js'],
+  apis: [
+    './src/modules/contrat/contrat.docs.js',
+    './src/modules/devis/devis.docs.js'
+  ],
 }
 
 const swaggerSpec = swaggerJsdoc(options)
