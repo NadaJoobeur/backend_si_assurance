@@ -243,6 +243,7 @@ export const fetchDtailContrat = async (req, res) => {
 
   try {
     const result = await getContratDetailService(numeroContrat);
+    console.log("result",result)
     return res.status(200).json({
       success: true,
       data: result, // contient contrat, garanties et profilsVehicule
