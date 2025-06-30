@@ -12,7 +12,6 @@ router.use('/auth', userRoutes)
 router.use('/personnes', personneRoutes )
 router.use('/contrats', contratRoutes); // endpoint: /api/contrats/:numeroIdentification/contrats-client
 router.use('/devis', devisRoutes); // endpoint: /api/contrats/:numeroIdentification/contrats-client
-router.use('/agence', agenceRoutes);
-
+router.use('/agences', agenceRoutes); // endpoint: /api/contrats/:numeroIdentification/contrats-client
 
 export default router;
