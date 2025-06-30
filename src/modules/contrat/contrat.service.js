@@ -391,32 +391,53 @@ export const deleteContratService = async (numeroContrat) => {
   }
 };
 export const getContratDetailService = async (numeroContrat) => {
-  // Récupérer le contrat principal
-  const contrat = await Contrat.findOne({
-    where: { numeroContrat: String(numeroContrat) }
-  })
+  console.log('🔍 Recherche contrat avec numeroContrat:', numeroContrat);
 
-  if (!contrat) {
-    throw new Error('Contrat non trouvé')
+  let contrat;
+  try {
+    contrat = await Contrat.findOne({
+      where: db.literal(`"numeroContrat" = '${numeroContrat}'`)
+    });
+    console.log('✅ Contrat trouvé:', contrat);
+  } catch (e) {
+    console.error('❌ Erreur lors de la récupération du contrat:', e);
+    throw new Error('Erreur lors de la récupération du contrat');
   }
 
-  // Récupérer les garanties liées
-  const garanties = await GarantieContrat.findAll({
-    where: { numeroContrat: String(numeroContrat) }
-  })
+  if (!contrat) {
+    throw new Error('Contrat non trouvé');
+  }
 
-  // Récupérer les profils véhicule liés
-  const profilVehicule = await ProfilVehicule.findAll({
-    where: { numeroContrat: String(numeroContrat) }
-  })
+  let garanties = [];
+  try {
+    garanties = await GarantieContrat.findAll({
+      where: { numeroContrat: String(numeroContrat) }
+    });
+    console.log('✅ Garanties trouvées:', garanties);
+  } catch (e) {
+    console.error('❌ Erreur lors de la récupération des garanties:', e);
+    throw new Error('Erreur lors de la récupération des garanties');
+  }
+
+  let profilVehicule = [];
+  try {
+    profilVehicule = await ProfilVehicule.findAll({
+      where: { numeroContrat: String(numeroContrat) }
+    });
+    console.log('✅ Profils véhicule trouvés:', profilVehicule);
+  } catch (e) {
+    console.error('❌ Erreur lors de la récupération des profils véhicule:', e);
+    throw new Error('Erreur lors de la récupération des profils véhicule');
+  }
 
   // Retourner un objet combiné
   return {
     contrat,
     garanties,
     profilVehicule
-  }
-}
+  };
+};
+
 
 
 export const updateContrat1 = async (numeroContrat, payload) => {
