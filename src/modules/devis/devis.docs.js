@@ -127,18 +127,38 @@
 
 /**
  * @swagger
- * /devis/{numeroContrat}/decompte:
- *   get:
+ * /devis/decompte:
+ *   post:
  *     tags:
  *       - Devis
- *     summary: Calculer le décompte du devis pour un contrat donné
- *     parameters:
- *       - in: path
- *         name: numeroContrat
- *         required: true
- *         schema:
- *           type: string
- *         description: Numéro de contrat à calculer
+ *     summary: Calculer le décompte du devis à partir des données saisies
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               valeurVenale:
+ *                 type: string
+ *                 example: "25000"
+ *               bonusMalus:
+ *                 type: string
+ *                 example: "0.95"
+ *               packChoisi:
+ *                 type: object
+ *                 properties:
+ *                   codePack:
+ *                     type: string
+ *                     example: "RC"
+ *               garantiesOptionnelles:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     codeGarantieOptionnelle:
+ *                       type: string
+ *                       example: "VREMP"
  *     responses:
  *       200:
  *         description: Résultat du calcul du décompte
@@ -147,23 +167,38 @@
  *             schema:
  *               type: object
  *               properties:
- *                 montantCommission:
- *                   type: number
- *                   example: 120.5
- *                 montantFrais:
- *                   type: number
- *                   example: 24.1
- *                 montantPrimeNette:
- *                   type: number
- *                   example: 1000.0
- *                 montantTaxe:
- *                   type: number
- *                   example: 190.0
- *                 montantPrimeTotale:
- *                   type: number
- *                   example: 1334.6
- *       404:
- *         description: Profil ou pack introuvable
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     montantPack:
+ *                       type: number
+ *                       example: 500
+ *                     montantGarantiesPack:
+ *                       type: number
+ *                       example: 2300
+ *                     montantGarantiesOptionnelles:
+ *                       type: number
+ *                       example: 50
+ *                     montantPrimeNette:
+ *                       type: number
+ *                       example: 2850
+ *                     montantCommission:
+ *                       type: number
+ *                       example: 285
+ *                     montantFrais:
+ *                       type: number
+ *                       example: 57
+ *                     montantTaxe:
+ *                       type: number
+ *                       example: 541.5
+ *                     montantPrimeTotale:
+ *                       type: number
+ *                       example: 3733.5
+ *       400:
+ *         description: Paramètres invalides ou manquants
  *       500:
  *         description: Erreur interne serveur
  */
