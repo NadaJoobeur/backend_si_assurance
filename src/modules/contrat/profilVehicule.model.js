@@ -2,6 +2,8 @@
 import { DataTypes } from 'sequelize';
 import db from '../../config/database.js';
 import Contrat from './contrat.model.js';
+import Devis from '../devis/devis.model.js';
+
 const ProfilVehicule = db.define('ProfilVehicule', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   numeroContrat: { type: DataTypes.STRING, allowNull: false },
@@ -22,7 +24,15 @@ const ProfilVehicule = db.define('ProfilVehicule', {
   puissanceFiscale: { type: DataTypes.STRING, allowNull: true },
   valeurCatalogue: { type: DataTypes.STRING, allowNull: true },
   ageVehicule: { type: DataTypes.STRING, allowNull: true },
-  nombreChevaux: { type: DataTypes.STRING, allowNull: true }
+  nombreChevaux: { type: DataTypes.STRING, allowNull: true },
+  id_devis: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: Devis,
+      key: 'id'
+    }
+  }
 }, {
   tableName: 'profils_vehicule',
   timestamps: false,
@@ -30,6 +40,10 @@ const ProfilVehicule = db.define('ProfilVehicule', {
 // Association : un contrat peut avoir plusieurs profils véhicules
 ProfilVehicule.belongsTo(Contrat, { foreignKey: 'numeroContrat', targetKey: 'numeroContrat' });
 Contrat.hasMany(ProfilVehicule, { foreignKey: 'numeroContrat', sourceKey: 'numeroContrat' });
+
+// One ProfilVehicule <-> One Devis
+ProfilVehicule.belongsTo(Devis, { foreignKey: 'id_devis' });
+Devis.hasOne(ProfilVehicule, { foreignKey: 'id_devis' });
 
 export default ProfilVehicule;
 

@@ -5,18 +5,19 @@ import Contrat from '../contrat/contrat.model.js';
 
 const Devis = db.define('Devis', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  numeroContrat: { type: DataTypes.STRING, allowNull: false },
   dateCreation: { type: DataTypes.DATEONLY },
   dateEffet: { type: DataTypes.DATEONLY },
   dateExpiration: { type: DataTypes.DATEONLY },
   typeFractionnement: { type: DataTypes.STRING },
-  typeRenouvellement: { type: DataTypes.STRING }
+  typeRenouvellement: { type: DataTypes.STRING },
+  statut: { 
+    type: DataTypes.STRING, // ex: "EN_ATTENTE", "VALIDÉ", "EXPIRÉ"
+    allowNull: false,
+    defaultValue: 'EN_ATTENTE'
+  }
 }, {
   tableName: 'devis',
   timestamps: false,
 });
-
-// FK
-Devis.belongsTo(Contrat, { foreignKey: 'numeroContrat', targetKey: 'numeroContrat' });
 
 export default Devis;

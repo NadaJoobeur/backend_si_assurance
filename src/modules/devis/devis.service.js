@@ -90,62 +90,72 @@ export const getPackGarantiesByNumeroContrat = async (numeroContrat) => {
 };
 
 
-export async function calculerDecompte(numeroContrat) {
-  // 1️ Extraire ProfilVehicule
-  const profil = await ProfilVehicule.findOne({ where: { numeroContrat } });
-  if (!profil) throw new Error('Profil véhicule introuvable');
+/**
+ * Calcule le décompte du devis.
+ * @param {Object} params
+ * @param {string} params.valeurVenale - Valeur vénale (String → parseFloat)
+ * @param {string} params.bonusMalus - Bonus/Malus (String → parseFloat)
+ * @param {Object} params.packChoisi - Un seul pack choisi { codePack }
+ * @param {Array} params.garantiesOptionnelles - [{ codeGarantieOptionnelle }]
+ */
+export async function calculerDecompte({ valeurVenale, bonusMalus, packChoisi, garantiesOptionnelles }) {
+  //  Conversion String → Nombre
+  const valeurVenaleNum = parseFloat(valeurVenale);
+  const bonusMalusNum = parseFloat(bonusMalus);
 
-  const valeurVenale = parseFloat(profil.valeurVenale);
-  const bonusMalus = parseFloat(profil.bonusMalus);
+  if (isNaN(valeurVenaleNum) || isNaN(bonusMalusNum)) {
+    throw new Error('ValeurVenale ou BonusMalus invalide');
+  }
 
-  // 2️ Récup TOUS les packs choisis
-  const packsChoisis = await Pack.findAll({ where: { numeroContrat } });
-  if (!packsChoisis || packsChoisis.length === 0) throw new Error('Aucun pack choisi');
+  //  Vérifier pack choisi
+  if (!packChoisi || !packChoisi.codePack) {
+    throw new Error('Pack choisi manquant');
+  }
 
-  let montantPacks = 0;
+  //  Chercher le pack dans le JSON
+  const packJSON = packsEtGaranties.packs.find(p => p.codePack === packChoisi.codePack);
+  if (!packJSON) {
+    throw new Error(`Pack ${packChoisi.codePack} introuvable dans packsEtGaranties`);
+  }
+
+  //  Calculer montant du pack
+  const montantPack = valeurVenaleNum * packJSON.taux;
+
+  //  Calculer montant des garanties incluses dans le pack
   let montantGarantiesPack = 0;
-
-  packsChoisis.forEach(packChoisi => {
-    const packJSON = packsEtGaranties.packs.find(p => p.codePack === packChoisi.codePack);
-    if (!packJSON) throw new Error(`Pack ${packChoisi.codePack} introuvable dans packsEtGaranties`);
-
-    // Ajouter taux du pack principal (si tu veux l'utiliser)
-    montantPacks += valeurVenale * packJSON.taux;
-
-    // Ajouter toutes les garanties du pack
-    packJSON.garanties.forEach(g => {
-      montantGarantiesPack += g.capitalGarantie * g.taux;
-    });
+  packJSON.garanties.forEach(g => {
+    montantGarantiesPack += g.capitalGarantie * g.taux;
   });
 
-  // 3️ Récup garanties optionnelles effectivement souscrites
-  const garantiesOptionnelles = await GarantieContrat.findAll({ where: { numeroContrat } });
-
-  let montantGarantieOptionnelle = 0;
-  garantiesOptionnelles.forEach(g => {
-    const garantieJSON = packsEtGaranties.garantiesOptionnelles.find(opt => opt.code === g.codeGarantie);
-    if (garantieJSON) {
-      montantGarantieOptionnelle += garantieJSON.capitalMaximum * garantieJSON.taux;
+  //  Calculer montant des garanties optionnelles
+  let montantGarantiesOptionnelles = 0;
+  garantiesOptionnelles?.forEach(opt => {
+    const garantieJSON = packsEtGaranties.garantiesOptionnelles.find(
+      g => g.code === opt.codeGarantieOptionnelle
+    );
+    if (!garantieJSON) {
+      throw new Error(`Garantie optionnelle ${opt.codeGarantieOptionnelle} introuvable`);
     }
+    montantGarantiesOptionnelles += garantieJSON.capitalMaximum * garantieJSON.taux;
   });
 
-  // 4️ Calculer Prime Nette
-  const montantPrimeNette = montantPacks + montantGarantiesPack + montantGarantieOptionnelle;
+  //  Prime nette
+  const montantPrimeNette = montantPack + montantGarantiesPack + montantGarantiesOptionnelles;
 
-  // 5️ Appliquer bonus/malus
-  const montantPrimeAvecBM = montantPrimeNette * bonusMalus;
+  //  Bonus/malus
+  const montantPrimeAvecBM = montantPrimeNette * bonusMalusNum;
 
-  // 6️ Frais, commission, taxe
-  const montantCommission = montantPrimeAvecBM * 0.10; // 10% commission
-  const montantFrais = montantPrimeAvecBM * 0.02; // 2% frais
-  const montantTaxe = montantPrimeAvecBM * 0.19; // TVA 19%
+  //  Frais, commission, taxe
+  const montantCommission = montantPrimeAvecBM * 0.10; // 10%
+  const montantFrais = montantPrimeAvecBM * 0.02; // 2%
+  const montantTaxe = montantPrimeAvecBM * 0.19; // 19%
 
   const montantPrimeTotale = montantPrimeAvecBM + montantCommission + montantFrais + montantTaxe;
 
   return {
+    montantPrimeNette,
     montantCommission,
     montantFrais,
-    montantPrimeNette,
     montantTaxe,
     montantPrimeTotale
   };

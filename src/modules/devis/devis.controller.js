@@ -29,9 +29,18 @@ export const getPackGaranties = async (req, res, next) => {
 
 export const getDecompteDevis = async (req, res) => {
   try {
-    const numeroContrat = req.params.numeroContrat;
+    const {valeurVenale,
+      bonusMalus,
+      packChoisi,
+      garantiesOptionnelles} = req.body
 
-    const resultat = await calculerDecompte(numeroContrat);
+    //  Appel avec les paramètres attendus
+    const resultat = await calculerDecompte({
+      valeurVenale,
+      bonusMalus,
+      packChoisi,
+      garantiesOptionnelles
+    });
 
     res.status(200).json({
       success: true,

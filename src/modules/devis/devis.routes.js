@@ -13,6 +13,6 @@ router.use(authMiddleware);
 
 // POST /contrats/:numeroContrat/parametres-generaux/pack-garanties
 router.post('/:numeroContrat/parametres-generaux/pack-garanties', getPackGaranties);
-router.get('/:numeroContrat/decompte', getDecompteDevis);
+router.post('/decompte', getDecompteDevis);
 
 export default router;
