@@ -429,12 +429,23 @@ export const getContratDetailService = async (numeroContrat) => {
     console.error('❌ Erreur lors de la récupération des profils véhicule:', e);
     throw new Error('Erreur lors de la récupération des profils véhicule');
   }
+    let pack;
+  try {
+    pack = await Pack.findOne({
+      where: {  numeroContrat : numeroContrat  }
+    });
+    console.log('✅ pack trouvé:', pack);
+  } catch (e) {
+    console.error('❌ Erreur lors de la récupération du pack:', e);
+    throw new Error('Erreur lors de la récupération du pack');
+  }
 
   // Retourner un objet combiné
   return {
     contrat,
     garanties,
-    profilVehicule
+    profilVehicule,
+    pack
   };
 };
 

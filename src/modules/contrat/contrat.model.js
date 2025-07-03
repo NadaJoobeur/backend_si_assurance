@@ -1,7 +1,7 @@
 // src/modules/contrat/contrat.model.js
 import { DataTypes } from 'sequelize';
 import db from '../../config/database.js';
-import Agence from '../agence/agence.model.js';
+import Devis from '../devis/devis.model.js';
 
 const Contrat = db.define('Contrat', {
   numeroContrat: DataTypes.STRING,
@@ -27,10 +27,10 @@ const Contrat = db.define('Contrat', {
   timestamps: false
 });
 // ✅ Définir l'association Sequelize
-Contrat.belongsTo(Agence, {
-  foreignKey: 'id_agence',
-  targetKey: 'id_agence',
-  as: 'agence'
+Contrat.belongsTo(Devis, {
+  foreignKey: 'id_devis',
+  targetKey: 'id',
+  as: 'devis'
 });
 
 export default Contrat;

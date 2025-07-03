@@ -6,7 +6,7 @@ import Devis from '../devis/devis.model.js';
 
 const ProfilVehicule = db.define('ProfilVehicule', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  numeroContrat: { type: DataTypes.STRING, allowNull: false },
+  numeroContrat: { type: DataTypes.STRING, allowNull: true },
   numeroImmatriculation: { type: DataTypes.STRING, allowNull: true },
   ChargeUtile: { type: DataTypes.STRING, allowNull: true },
   poidsTotalEnCharge: { type: DataTypes.STRING, allowNull: true },
