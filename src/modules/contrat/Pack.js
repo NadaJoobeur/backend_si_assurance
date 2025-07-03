@@ -5,7 +5,7 @@ import Devis from '../devis/devis.model.js';
 const Pack = db.define('Pack', {
   numeroContrat: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   codePack: {
     type: DataTypes.STRING,
