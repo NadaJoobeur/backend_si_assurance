@@ -1,7 +1,7 @@
 // src/modules/devis/devis.routes.js
 
 import express from 'express';
-import { getPackGaranties,getDecompteDevis,fetchAddDevis ,fetchListDevis,fetchDeleteDevis,fetchDtailDevis,fetchUpdateDevis,fetchCreateContrat} from '../devis/devis.controller.js';
+import { getPackGaranties,getGenresVehicule,getDecompteDevis,fetchAddDevis ,fetchListDevis,fetchDeleteDevis,fetchDtailDevis,fetchUpdateDevis,fetchCreateContrat} from '../devis/devis.controller.js';
 import { authMiddleware } from '../../middlewares/authMiddleware.js';
 
 
@@ -22,5 +22,6 @@ router.patch('/contratFromDevis/:id_devis',authMiddleware,fetchCreateContrat),
 // POST /contrats/:numeroContrat/parametres-generaux/pack-garanties
 router.post('/:numeroContrat/parametres-generaux/pack-garanties', getPackGaranties);
 router.post('/decompte', getDecompteDevis);
+router.get('/genresVehicule', getGenresVehicule);
 
 export default router;

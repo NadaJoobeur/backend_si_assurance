@@ -202,3 +202,33 @@
  *       500:
  *         description: Erreur interne serveur
  */
+
+
+/**
+ * @swagger
+ * /parametres-generaux/genresVehicule:
+ *   get:
+ *     summary: Liste des genres de véhicules
+ *     description: Récupère la liste des genres de véhicules avec code et libellé.
+ *     tags:
+ *       - Devis
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   code:
+ *                     type: string
+ *                     example: "00670001"
+ *                   libelle:
+ *                     type: string
+ *                     example: "Voiture"
+ *       500:
+ *         description: Erreur interne serveur
+ */
+

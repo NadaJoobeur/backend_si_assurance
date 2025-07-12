@@ -1,4 +1,5 @@
 // src/modules/contrat/contrat.controller.js
+import { genresVehicule } from './genresVehicule.js';
 
 import { getPackGarantiesByNumeroContrat,
    calculerDecompte,
@@ -174,3 +175,8 @@ export const fetchCreateContrat = async (req, res) => {
   }
 };
 
+//nada
+
+export const getGenresVehicule = (req, res) => {
+  res.status(200).json(genresVehicule);
+};

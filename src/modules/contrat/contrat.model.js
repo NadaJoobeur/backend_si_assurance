@@ -21,16 +21,15 @@ const Contrat = db.define('Contrat', {
   nature: DataTypes.STRING,
   indicateurSouscripteur: DataTypes.BOOLEAN,
   indicateurAssure: DataTypes.BOOLEAN,
-  numeroIdentification: DataTypes.STRING, // Clé d'identification du client
+  numeroIdentification: DataTypes.STRING, 
+  id_devis: {
+  type: DataTypes.INTEGER,
+  allowNull: true, // Permet NULL
+  }// Clé d'identification du client
 }, {
   tableName: 'contrats',
   timestamps: false
 });
-// ✅ Définir l'association Sequelize
-Contrat.belongsTo(Devis, {
-  foreignKey: 'id_devis',
-  targetKey: 'id',
-  as: 'devis'
-});
+
 
 export default Contrat;

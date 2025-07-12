@@ -1,6 +1,7 @@
 // src/modules/agence/agence.controller.js
 import { findAgencesByNumeroIdentifiant } from './agence.service.js';
-import { createAgence, listAgences, deleteAgenceByCode ,updateAgenceByCode,getAgenceDetails } from './agence.service.js';
+import { createAgence, listAgences, deleteAgenceByCode ,updateAgenceByCode,getAgenceDetails,getAllAgences } from './agence.service.js';
+
 
 export async function createAgenceController(req, res) {
   try {
@@ -104,5 +105,80 @@ export const getAgencesClient = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
+  }
+};
+
+
+//Nada
+
+export async function fetchgetBranches(req, res) {
+  try {
+    const { codeAgence } = req.params;
+    const branches = await getBranches();
+    if (!branches || branches.length === 0) {
+      return res.status(204).send();
+    }
+    res.status(200).json(branches);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur interne serveur' });
+  }
+}
+
+
+// GET avec agence
+export const getBranchesByAgence = async (req, res) => {
+  try {
+    const { codeAgence } = req.params;
+    const branches = await getBranchesByCodeAgence(codeAgence);
+    if (branches.length === 0) {
+      return res.status(204).json({ message: 'Aucune branche trouvée.' });
+    }
+    res.json(branches);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur interne serveur.' });
+  }
+};
+
+
+
+export const fetchAllOffres = async (req, res) => {
+  try {
+    const offres = await getAllOffres();
+    if (offres.length === 0) {
+      return res.status(204).send();
+    }
+    return res.status(200).json(offres);
+  } catch (error) {
+    console.error("Erreur:", error);
+    return res.status(500).json({ message: "Erreur interne serveur" });
+  }
+};
+
+
+export const fetchOffresByCodeBranche = async (req, res) => {
+  try {
+    const { codeBranche } = req.params;
+    const offres = await getOffresByCodeBranche(codeBranche);
+    if (offres.length === 0) {
+      return res.status(204).send();
+    }
+    return res.status(200).json(offres);
+  } catch (error) {
+    console.error("Erreur:", error);
+    return res.status(500).json({ message: "Erreur interne serveur" });
+  }
+};
+
+export const getAllAgencesAss = async (req, res) => {
+  try {
+    console.log('👉 Début getAllAgences');
+    const agences = await getAllAgences();
+    console.log('✅ Résultat agences:', agences);
+    res.status(200).json(agences);
+  } catch (error) {
+    console.error('Erreur getAllAgences:', error);
+    res.status(500).json({ message: 'Erreur serveur lors de la récupération des agences.' });
   }
 };

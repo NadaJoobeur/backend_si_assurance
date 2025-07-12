@@ -88,3 +88,63 @@ export async function getAgenceDetails(code_agence) {
     throw error;
   }
 }
+
+//Nada
+export async function getBranches() {
+  let whereClause = {};
+  const branches = await Contrat.findAll({
+    attributes: [
+      [db.Sequelize.fn('DISTINCT', db.Sequelize.col('codeBranche')), 'codeBranche'],
+      'branche'
+    ],
+    where: whereClause
+  });
+
+  return branches;
+}
+
+
+// Liste filtrée par codeAgence
+export const getBranchesByCodeAgence = async (codeAgence) => {
+  const branches = await Contrat.findAll({
+    where: { id_agence: codeAgence },
+    attributes: [
+      ['branche', 'branche'],
+      ['codeBranche', 'codeBranche'],
+    ],
+    group: ['branche', 'codeBranche'],
+  });
+  return branches;
+};
+
+
+export const getAllOffres = async () => {
+  const offres = await Contrat.findAll({
+    attributes: [
+      ['codeOffreCommerciale', 'codeOffreCommerciale'],
+      ['offreCommerciale', 'nomCommercial'],
+    ],
+    group: ['codeOffreCommerciale', 'offreCommerciale'],
+  });
+  return offres;
+};
+
+export const getOffresByCodeBranche = async (codeBranche) => {
+  const offres = await Contrat.findAll({
+    where: { codeBranche: codeBranche },
+    attributes: [
+      ['codeOffreCommerciale', 'codeOffreCommerciale'],
+      ['offreCommerciale', 'nomCommercial'],
+    ],
+    group: ['codeOffreCommerciale', 'offreCommerciale'],
+  });
+  return offres;
+};
+
+export const getAllAgences = async () => {
+  return await Agence.findAll({
+    attributes: ['id_agence', 'code_agence', 'nom_agence'], // on sélectionne que l’essentiel
+    where: { statut: 'active' }, // Optionnel : filtrer par statut actif
+    order: [['nom_agence', 'ASC']], // tri par nom
+  });
+};

@@ -33,7 +33,8 @@ Elle couvre la gestion des contrats d'assurance, des clients, des garanties, des
   apis: [
     './src/modules/contrat/contrat.docs.js',
     './src/modules/devis/devis.docs.js',
-    './src/modules/agence/agence.docs.js'
+    './src/modules/agence/agence.docs.js',
+    './src/modules/paiement/paiement.docs.js'
   ],
 }
 
