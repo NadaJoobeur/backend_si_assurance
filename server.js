@@ -7,6 +7,7 @@ import './src/modules/agence/agence.model.js';
 import './src/modules/contrat/contrat.model.js';
 import './src/modules/devis/result_devis.model.js';
 import './src/modules/paiement/paiement.model.js';
+import './src/modules/profil/profile.model.js';
 // Synchronisation des tables avant de démarrer le serveur
 sequelize.sync()
   .then(() => {

@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import routes from './routes.js'
 import errorHandler from '../middlewares/errorHandler.js'
 import {setupSwagger} from "./swagger.js";
+import path from 'path';
 
 const app = express();
 
@@ -18,6 +19,10 @@ app.use('/', routes);
 
 // gestion des erreurs
 app.use(errorHandler);
+
+// ✅ Sert le dossier uploads en statique :
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 
 // Configuration Swagger
 setupSwagger(app);
