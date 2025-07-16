@@ -1,6 +1,7 @@
 // src/modules/agence/agence.service.js
 import Contrat from '../contrat/contrat.model.js';
 import Agence from './agence.model.js';
+import { v4 as uuidv4 } from 'uuid'; // pour générer un numeroSinistre unique
 
 export const findAgencesByNumeroIdentifiant = async (numeroIdentifiant) => {
   // Étape 1 : Chercher contrats
@@ -29,15 +30,20 @@ export const findAgencesByNumeroIdentifiant = async (numeroIdentifiant) => {
 };
 
 export async function createAgence(data) {
+const code_agence = `AG-${uuidv4().split('-')[0].slice(0, 4)}`; 
   try {
-    // Création d'une nouvelle agence en base
-    const newAgence = await Agence.create(data);
+    // Merge the code_agence into the input data
+    const newAgence = await Agence.create({
+      ...data,
+      code_agence, // add it here
+    });
+
     return newAgence;
   } catch (error) {
-    // Remonter l'erreur au controller pour gestion
-    throw error;
+    throw error; // Pass the error up
   }
 }
+
 export async function listAgences() {
   try {
     // Récupérer toutes les agences
