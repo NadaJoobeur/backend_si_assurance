@@ -11,6 +11,7 @@ import path from 'path';
 import Personne from '../Personne/personne.model.js';
 import { Op } from 'sequelize';
 import db from '../../config/database.js'; // adapte le chemin selon ton projet
+import { v4 as uuidv4 } from 'uuid'; // pour générer un numeroSinistre unique
 
 export const getContratsClient = async ({ numeroIdentification, etatContrat, echeance }) => {
   const whereClause = {
@@ -306,9 +307,15 @@ export const createContratService = async (payload) => {
   if (!personneExiste) {
     throw new Error("La personne avec ce numéro d'identification n'existe pas.");
   }
+ const numeroContrat = `CNT-${uuidv4().split('-')[0].slice(0, 4)}`; 
+ 
+    const contratAvecNumero = {
+  ...contrat,
+  numeroContrat,
+};
 
-  // 1. Création du contrat
-  const nouveauContrat = await Contrat.create(contrat);
+    // Créer le contrat en base de données
+    const nouveauContrat = await Contrat.create(contratAvecNumero);
 
   // 2. Création des garanties liées
   if (Array.isArray(garanties)) {
@@ -345,8 +352,6 @@ export const getContratsByOwnerId = async (ownerId) => {
   if (isNaN(ownerIdInt)) throw new Error("ownerId invalide");
 
   const personnes = await Personne.findAll({
-    where: { ownerId: ownerIdInt },
-    attributes: ['id'],
   });
 
   const ids = personnes.map(p => p.id.toString());
@@ -354,11 +359,7 @@ export const getContratsByOwnerId = async (ownerId) => {
   if (ids.length === 0) return [];
 
   const contrats = await Contrat.findAll({
-    where: {
-      numeroIdentification: {
-        [Op.in]: ids,
-      },
-    },
+  
   });
 
   return contrats;

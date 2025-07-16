@@ -27,7 +27,7 @@ export const DeletePerson = async ({ numeroIdentification }) => {
 
 export const ListPerson = async ({ ownerId }) => {
   return await Personne.findAll({
-    where: { ownerId }
+   
   })
 }
 
