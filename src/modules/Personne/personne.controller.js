@@ -7,7 +7,8 @@ import {
   CheckBlackList as checkBlackListService,
   CheckPersonExist as checkPersonExistService,
   checkPersonExistence as checkPersonExistenceService,
-  modifierMoyenContact 
+  modifierMoyenContact,
+  verifierExistenceClientService
 } from './personne.service.js'
 
 export const createPerson = async (req, res) => {
@@ -192,3 +193,22 @@ export const modificationMoyenContact = async (req, res) => {
     });
   }
 };
+
+
+export async function verifierExistenceClient(req, res) {
+  try {
+    const { numeroIdentite, numeroContrat } = req.params;
+
+    const existe = await verifierExistenceClientService(numeroIdentite, numeroContrat);
+
+    if (existe) {
+      return res.json(true);
+    } else {
+      return res.status(204).send();
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur interne serveur' });
+  }
+}

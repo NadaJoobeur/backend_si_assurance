@@ -34,7 +34,9 @@ Elle couvre la gestion des contrats d'assurance, des clients, des garanties, des
     './src/modules/contrat/contrat.docs.js',
     './src/modules/devis/devis.docs.js',
     './src/modules/agence/agence.docs.js',
-    './src/modules/paiement/paiement.docs.js'
+    './src/modules/paiement/paiement.docs.js',
+    './src/modules/sinistre/sinistre.docs.js',
+    './src/modules/Personne/personne.docs.js'
   ],
 }
 

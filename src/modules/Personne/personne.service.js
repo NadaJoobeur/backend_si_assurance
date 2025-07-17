@@ -188,3 +188,15 @@ export const modifierMoyenContact = async ({
 
   return true;
 };
+
+
+export async function verifierExistenceClientService(numeroIdentite, numeroContrat) {
+  const contrat = await Contrat.findOne({
+    where: {
+      numeroIdentification: numeroIdentite,
+      numeroContrat: numeroContrat
+    }
+  });
+
+  return contrat ? true : false;
+}

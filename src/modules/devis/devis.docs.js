@@ -1,5 +1,15 @@
 /**
  * @swagger
+ * tags:
+ *   - name: Devis
+ *     description: |
+ *       Ce module regroupe l’ensemble des endpoints permettant de gérer la création,
+ *       la personnalisation, le calcul et la simulation de devis pour les contrats AUTO.
+ */
+
+
+/**
+ * @swagger
  * /devis/{numeroContrat}/parametres-generaux/pack-garanties:
  *   post:
  *     tags:

@@ -1,5 +1,13 @@
 /**
  * @swagger
+ * tags:
+ *   - name: Agences
+ *     description: Gère la liste des agences, leurs branches et leurs offres commerciales.
+ */
+
+
+/**
+ * @swagger
  * /agence/{numeroIdentifiant}/ListAgencesParClient:
  *   get:
  *     tags:

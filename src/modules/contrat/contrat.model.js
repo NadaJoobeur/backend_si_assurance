@@ -3,6 +3,7 @@ import { DataTypes } from 'sequelize';
 import db from '../../config/database.js';
 import Devis from '../devis/devis.model.js';
 
+
 const Contrat = db.define('Contrat', {
   numeroContrat: DataTypes.STRING,
   branche: DataTypes.STRING,

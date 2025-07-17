@@ -5,6 +5,7 @@ import {
   fetchDeleteSinistre,
   fetchDetailSinistre,
   fetchUpdateSinistre,
+  fetchSinistres,fetchReglements,listGarantiesSinistre,getListeStatuts,fetchSinistresParProduit,getTimeline,
 } from './sinistre.controller.js';
 import { authMiddleware } from '../../middlewares/authMiddleware.js';
 
@@ -17,6 +18,12 @@ router.delete('/DeleteSinistre/:numeroSinistre',authMiddleware,fetchDeleteSinist
 router.get('/:numeroSinistre/details', authMiddleware, fetchDetailSinistre)
 router.patch('/UpdateSinistre/:numeroSinistre', authMiddleware, fetchUpdateSinistre)
 
-
+//Nada
+router.get('/statuts', getListeStatuts); // ✅ FIXE EN PREMIER
+router.get('/:numeroSinistre/reglements', fetchReglements);
+router.get('/:numeroSinistre/garanties', listGarantiesSinistre);
+router.get('/:identifiantClient', fetchSinistres);   // ✅ DYNAMIQUE EN DERNIER
+router.get('/:identifiantPrincipal', fetchSinistresParProduit);
+router.get('/:numeroSinistre/timelines', getTimeline);
 
 export default router;

@@ -8,7 +8,8 @@ import {
   CheckBlackList,
   CheckPersonExist,
   CheckPersonExistence,
-  modificationMoyenContact
+  modificationMoyenContact,
+  verifierExistenceClient
 } from './personne.controller.js'
 
 import { authMiddleware } from '../../middlewares/authMiddleware.js'
@@ -31,5 +32,6 @@ router.get('/:numeroIdentification/:numeroContrat/existence-client', authMiddlew
 
 router.get('/modificationMoyenContact'/*, authMiddleware*/, modificationMoyenContact);
 
+router.get('/:numeroIdentite/:numeroContrat/existence-client', verifierExistenceClient);
 
 export default router

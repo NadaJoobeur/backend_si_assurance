@@ -1,81 +1,10 @@
 /**
  * @swagger
- * components:
- *   schemas:
- *     PaiementInput:
- *       type: object
- *       required:
- *         - codeAgence
- *         - transactionDate
- *         - orderId
- *         - orderNumber
- *         - cardholderName
- *         - depositAmount
- *         - currency
- *         - listeQuittances
- *       properties:
- *         codeAgence:
- *           type: string
- *           example: "01"
- *         transactionDate:
- *           type: string
- *           format: date-time
- *           example: "2025-07-11T10:30:00Z"
- *         orderId:
- *           type: string
- *           example: "ORDER-123"
- *         orderNumber:
- *           type: string
- *           example: "ABC-456"
- *         cardholderName:
- *           type: string
- *           example: "ADEL AMARI"
- *         depositAmount:
- *           type: number
- *           format: double
- *           example: 250.5
- *         currency:
- *           type: string
- *           example: "DTN"
- *         listeQuittances:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/ListeQuittance'
- *
- *     PaiementResponse:
- *       type: object
- *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *         codeAgence:
- *           type: string
- *           example: "01"
- *         transactionDate:
- *           type: string
- *           format: date-time
- *           example: "2025-07-11T10:30:00Z"
- *         orderId:
- *           type: string
- *           example: "ORDER-123"
- *         orderNumber:
- *           type: string
- *           example: "ABC-456"
- *         cardholderName:
- *           type: string
- *           example: "ADEL AMARI"
- *         depositAmount:
- *           type: number
- *           format: double
- *           example: 250.5
- *         currency:
- *           type: string
- *           example: "DTN"
- *         listeQuittances:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/ListeQuittance'
+ * tags:
+ *   - name: Paiements
+ *     description: Gère l’enregistrement et la consultation des paiements clients.
  */
+
 
 /**
  * @swagger

@@ -3,6 +3,7 @@ import {createSinistreService,
   deleteSinistreService,
   detailSinistreService,
   updateSinistreService,
+  getSinistresByClient,getReglementsByNumeroSinistre, getGarantiesByNumeroSinistre,getStatutsSinistre,getSinistresByClientAndProduit, getTimelineByNumeroSinistre,
 } from "../sinistre/sinistre.service.js"
 
 
@@ -87,5 +88,139 @@ export const fetchUpdateSinistre = async (req, res) => {
       message: 'Problème technique. Impossible de retrouver le client.',
       error: error.message
     })
+  }
+}
+
+
+//Nada
+export const fetchSinistres = async (req, res) => {
+  try {
+    const { identifiantClient } = req.params;
+    console.log('REQ PARAMS:', identifiantClient);
+
+    if (!identifiantClient) {
+      return res.status(400).json({ message: 'Identifiant client requis.' });
+    }
+
+    const sinistres = await getSinistresByClient(identifiantClient);
+    console.log('RESULT:', sinistres);
+
+    if (!sinistres || sinistres.length === 0) {
+      return res.status(204).send();
+    }
+
+    res.status(200).json(sinistres);
+  } catch (err) {
+    console.error('ERR in fetchSinistres:', err);
+    res.status(500).json({ message: 'Erreur serveur interne' });
+  }
+};
+
+export const fetchReglements = async (req, res) => {
+  try {
+    const { numeroSinistre } = req.params;
+
+    console.log('REQ PARAMS numeroSinistre:', numeroSinistre);
+
+    if (!numeroSinistre) {
+      return res.status(400).json({ message: 'Numero sinistre requis.' });
+    }
+
+    const reglements = await getReglementsByNumeroSinistre(numeroSinistre);
+    console.log('RESULT Reglements:', reglements);
+
+    if (!reglements || reglements.length === 0) {
+      return res.status(204).send();
+    }
+
+    res.status(200).json(reglements);
+  } catch (err) {
+    console.error('ERR in fetchReglements:', err);
+    res.status(500).json({ message: 'Erreur serveur interne' });
+  }
+};
+
+export async function listGarantiesSinistre(req, res) {
+  try {
+    const numeroSinistre = req.params.numeroSinistre;
+
+    const garanties = await getGarantiesByNumeroSinistre(numeroSinistre);
+
+    if (!garanties) {
+      return res.status(204).json({ message: "Aucun sinistre trouvé." });
+    }
+
+    if (garanties.length === 0) {
+      return res.status(204).json({ message: "Aucune garantie trouvée." });
+    }
+
+    res.json(garanties);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur interne serveur" });
+  }
+}
+
+export async function getListeStatuts(req, res) {
+  try {
+    const statuts = await getStatutsSinistre();
+    if (!statuts || statuts.length === 0) {
+      return res.status(204).send();
+    }
+    res.json(statuts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur interne serveur' });
+  }
+}
+
+
+
+export async function fetchSinistresParProduit(req, res) {
+  const { identifiantPrincipal } = req.params;
+  const { produit } = req.query;
+
+  console.log(`>>> fetchSinistres: identifiantPrincipal=${identifiantPrincipal}, produit=${produit}`);
+
+  try {
+    const sinistres = await getSinistresByClientAndProduit(identifiantPrincipal, produit);
+
+    if (!sinistres || sinistres.length === 0) {
+      return res.status(204).send();
+    }
+
+    const result = sinistres.map(s => ({
+      numeroContrat: s.numeroContrat,
+      numeroSinistre: s.numeroSinistre,
+      numeroImmatriculation: s.numeroImmatriculation,
+      statut: s.statut,
+      dateSinistre: s.dateSinistre,
+      optionReparation: s.optionReparation,
+      motifRejet: s.motifRejet,
+      lieuSinistre: s.lieuSinistre,
+      conducteur: s.conducteur,
+      typeConducteur: s.typeConducteur
+    }));
+
+    res.json(result);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur interne serveur' });
+  }
+}
+
+export async function getTimeline(req, res) {
+  const { numeroSinistre } = req.params;
+  try {
+    const timeline = await getTimelineByNumeroSinistre(numeroSinistre);
+    if (!timeline || timeline.length === 0) {
+      return res.status(204).send();
+    }
+    res.json(timeline);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur interne serveur' });
   }
 }
